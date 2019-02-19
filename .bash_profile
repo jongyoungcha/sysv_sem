@@ -95,3 +95,8 @@ function geth-init-run-poa {
 }
 
 
+function pull-berith-env {
+	git pull
+}
+
+
