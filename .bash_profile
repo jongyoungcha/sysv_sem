@@ -30,7 +30,7 @@ function geth-create-accounts {
         local passwd="jongyoungcha"
         local passwdfile="eth-passwd"
         local accountsfile="eth-accounts"
-
+	
         output=`which geth`
         if [[ "$output" == "" ]];then
                 echo not found "$output"
@@ -38,25 +38,23 @@ function geth-create-accounts {
         else
                 echo Found "$output"
         fi
-
-        #if [ -f "$passwdfile" ]; then
-        #        echo "Initializing the passwd file..."
-        #        rm ~/"$passwdfile"
-        touch ~/"$passwdfile"
-        echo "$passwd        " >> ~/"$passwdfile"
-        #fi
-
+	
+	if [ ! -f "$passwdfile" ]; then
+        	touch ~/"$passwdfile"
+        	echo "$passwd" >> ~/"$passwdfile"
+	fi
+	
         if [ -f "$accountsfile" ]; then
                 echo "Initializing the accounts file..."
                 rm ~/"$accountsfile"
                 touch ~/"$accountsfile"
         fi
-
-        mkdir ~/"$datadir" > /dev/null
+	if [ ! -d "$datadir" ]; then
+        	mkdir ~/"$datadir" > /dev/null
+	fi
+	
         geth --datadir ~/"$datadir" account new --password ~/"$passwdfile"
 	sleep 1
-
-	rm ~/$passwdfile
 }
 
 
@@ -66,13 +64,15 @@ function geth-init-poa {
 }
 
 
-
-function geth-run { nohup geth --datadir=~/testnet --bootnodes "$BOOTNODE" --syncmode "full" --cache=2048 >> ~/geth.log & }
+function geth-run { 
+	nohup geth --datadir=~/testnet --bootnodes "$BOOTNODE" --syncmode "full" --cache=2048 >> ~/geth.log & 
+}
 
 
 function goto-berith {
         cd $GOPATH/src/bitbucket.org/ibizsoftware/berith-chain
 }
+
 
 function geth-init-run {
     geth-kill
@@ -83,6 +83,7 @@ function geth-init-run {
     sleep 1
     geth-run
 }
+
 
 function geth-init-run-poa {
     geth-kill
