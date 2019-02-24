@@ -101,3 +101,15 @@ function pull-berith-env {
 }
 
 
+export GOROOT=~/go
+export GOPATH=~/goworks-berith
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
+export GOROOT=~/go
+export GOPATH=~/goworks-berith
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
+export GOROOT=~/go
+export GOPATH=~/goworks-berith
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin

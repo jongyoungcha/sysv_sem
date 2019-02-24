@@ -27,7 +27,7 @@ go get -u github.com/go-delve/delve/cmd/dlv
 
 # silver searcher 설치
 cd
-apt-get install -y automake pkg-config libpcre3-devel zlib1g-devel liblzma-devel
+apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
 git clone https://github.com/ggreer/the_silver_searcher.git
 cd the_silver_searcher
 ./build.sh
@@ -46,14 +46,22 @@ git clone https://ycjo@bitbucket.org/ibizsoftware/berith-chain.git
 cd
 wget http://ftp.kaist.ac.kr/gnu/emacs/emacs-26.1.tar.gz
 tar -xvf emacs-26.1.tar.gz
-apt-get install -y libgtk-3-devel;
-apt-get install -y libxpm-devel;
-apt-get install -y gnutls-devel;
-apt-get install -y libncurses5-devel;
-apt-get install -y libx11-devel;
-apt-get install -y libxpm-devel;
-apt-get install -y libjpeg-devel;
-apt-get install -y libpng-devel;
-apt-get install -y libgif-devel;
-apt-get install -y libtiff-devel;
-apt-get install -y libgtk2.0-devel;
+apt-get install -y libgtk-3-dev;
+apt-get install -y libxpm-dev;
+apt-get install -y gnutls-dev;
+apt-get install -y libncurses5-dev;
+apt-get install -y libx11-dev;
+apt-get install -y libxpm-dev;
+apt-get install -y libjpeg-dev;
+apt-get install -y libpng-dev;
+apt-get install -y libgif-dev;
+apt-get install -y libtiff-dev;
+apt-get install -y libgtk2.0-dev;
+
+cd ./emacs-26.1
+./configure
+make install
+
+
+
+
