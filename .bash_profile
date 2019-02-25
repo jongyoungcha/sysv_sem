@@ -102,6 +102,17 @@ function pull-berith-env {
 }
 
 
+function jong-set-homeenv-as-mine {
+	cd
+	git init
+	git remote add https://github.com/jongyoungcha/Dictionary.git
+	git fetch
+	git checkout -t origin/master -f
+
+	return
+}
+
+
 function brth-pull-as-master {
 
 	echo "$FUNCNAME[*]()"
