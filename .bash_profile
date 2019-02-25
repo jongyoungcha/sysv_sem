@@ -167,6 +167,7 @@ function brth-build-install {
 	cd "$BERITH_PATH"/cmd/geth
 	go build
 	go install
+	cd
 	
 	return
 }
