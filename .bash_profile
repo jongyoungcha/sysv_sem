@@ -1,11 +1,12 @@
 if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
+    . ~/.bashrc
 fi
 
 export GOROOT=~/go
 export GOPATH=~/goworks-berith
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
+export BERITH_PATH=$GOPATH/src/bitbucket.org/ibizsoftware/berith-chain
 
 
 export BOOTNODE=enode://637a54e3de83e4978efbaad91745dbee1fc60ff7c1608fddca3f23ce2d8c2878ae10a05f0f768b78dd46ca723449ae6cb34e76b7639d0cc2b6c0bea805f32527@192.168.0.160:30310
@@ -26,34 +27,34 @@ alias geth-log='tail -f ~/geth.log'
 alias geth-remove-data='cd ~/testnet;ls | grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}'
 
 function geth-create-accounts {
-        local datadir="testnet"
-        local passwd="jongyoungcha"
-        local passwdfile="eth-passwd"
-        local accountsfile="eth-accounts"
+    local datadir="testnet"
+    local passwd="jongyoungcha"
+    local passwdfile="eth-passwd"
+    local accountsfile="eth-accounts"
 	
-        output=`which geth`
-        if [[ "$output" == "" ]];then
-                echo not found "$output"
-                return 1
-        else
-                echo Found "$output"
-        fi
+    output=`which geth`
+    if [[ "$output" == "" ]];then
+        echo not found "$output"
+        return 1
+    else
+        echo Found "$output"
+    fi
 	
 	if [ ! -f "$passwdfile" ]; then
-        	touch ~/"$passwdfile"
-        	echo "$passwd" >> ~/"$passwdfile"
+        touch ~/"$passwdfile"
+        echo "$passwd" >> ~/"$passwdfile"
 	fi
 	
-        if [ -f "$accountsfile" ]; then
-                echo "Initializing the accounts file..."
-                rm ~/"$accountsfile"
-                touch ~/"$accountsfile"
-        fi
+    if [ -f "$accountsfile" ]; then
+        echo "Initializing the accounts file..."
+        rm ~/"$accountsfile"
+        touch ~/"$accountsfile"
+    fi
 	if [ ! -d "$datadir" ]; then
-        	mkdir ~/"$datadir" > /dev/null
+        mkdir ~/"$datadir" > /dev/null
 	fi
 	
-        geth --datadir ~/"$datadir" account new --password ~/"$passwdfile"
+    geth --datadir ~/"$datadir" account new --password ~/"$passwdfile"
 	sleep 1
 }
 
@@ -70,7 +71,7 @@ function geth-run {
 
 
 function goto-berith {
-        cd $GOPATH/src/bitbucket.org/ibizsoftware/berith-chain
+    cd $GOPATH/src/bitbucket.org/ibizsoftware/berith-chain
 }
 
 
@@ -101,15 +102,74 @@ function pull-berith-env {
 }
 
 
-export GOROOT=~/go
-export GOPATH=~/goworks-berith
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
-export GOROOT=~/go
-export GOPATH=~/goworks-berith
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
-export GOROOT=~/go
-export GOPATH=~/goworks-berith
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
+function brth-pull-as-master {
+
+	echo "$FUNCNAME[*]()"
+	
+	if [[ -z "$BERITH_PATH" ]]; then
+		echo "\$BERITH_PATH was not existing..."
+		return
+	fi
+
+	cd "$BERITH_PATH"
+	cd ..
+	
+	echo "Removing Berith previous berith : $BERITH_PATH"
+	rm -rf "$BERITH_PATH"
+	git clone https://ycjo@bitbucket.org/ibizsoftware/berith-chain.git
+	
+	return
+}
+
+function brth-pull-as-ycjo {
+	
+	echo "$FUNCNAME[*]()"
+	
+	if [[ -z "$BERITH_PATH" ]]; then
+		echo "\$BERITH_PATH was not existing..."
+		return
+	fi
+
+	cd "$BERITH_PATH"
+	cd ..
+	
+	echo "Removing Berith previous berith : $BERITH_PATH"
+	rm -rf "$BERITH_PATH"
+	git clone https://ycjo@bitbucket.org/ycjo/berith-chain.git
+	
+	return
+}
+
+
+function brth-pull-replace-master-as-ycjo {
+	
+	echo "$FUNCNAME[*]()"
+	
+	if [[ -z "$BERITH_PATH" ]]; then
+		echo "\$BERITH_PATH was not existing..."
+		return
+	fi
+
+	brth-pull-as-master
+	cd "berith-chain"
+	git remote set-url origin https://ycjo@bitbucket.org/ycjo/berith-chain.git
+	git push
+
+	return
+}
+
+function brth-build-install {
+	if [[ -z "$BERITH_PATH" ]]; then
+		echo "\$BERITH_PATH was not existing..."
+		return
+	fi
+
+	cd "$BERITH_PATH"/cmd/geth
+	go build
+	go install
+	
+	return
+}
+
+
+
