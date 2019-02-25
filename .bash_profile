@@ -7,7 +7,7 @@ export GOPATH=~/goworks-berith
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
 export GO_IBIZ_PATH=$$GOPATH/src/bitbucket.org/ibizsoftware
-export GO_BERITH_PATH=$IBIZ_PATH/berith-chain
+export GO_BERITH_PATH=$GO_IBIZ_PATH/berith-chain
 
 
 export BOOTNODE=enode://637a54e3de83e4978efbaad91745dbee1fc60ff7c1608fddca3f23ce2d8c2878ae10a05f0f768b78dd46ca723449ae6cb34e76b7639d0cc2b6c0bea805f32527@192.168.0.160:30310
