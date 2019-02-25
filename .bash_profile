@@ -6,7 +6,7 @@ export GOROOT=~/go
 export GOPATH=~/goworks-berith
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
-export GO_IBIZ_PATH=$$GOPATH/src/bitbucket.org/ibizsoftware
+export GO_IBIZ_PATH=$GOPATH/src/bitbucket.org/ibizsoftware
 export GO_BERITH_PATH=$GO_IBIZ_PATH/berith-chain
 
 
