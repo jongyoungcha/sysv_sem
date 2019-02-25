@@ -2,6 +2,10 @@ if [ -f ~/.bashrc ]; then
     . ~/.bashrc
 fi
 
+if [ -f ~/jong-base.sh ]; then
+	. ~/jong-base.sh
+fi
+
 export GOROOT=~/go
 export GOPATH=~/goworks-berith
 export PATH=$PATH:$GOROOT/bin
