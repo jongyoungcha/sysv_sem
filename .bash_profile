@@ -27,7 +27,7 @@ alias geth-remove-db='geth --datadir=~/testnet removedb'
 alias geth-log='tail -f ~/geth.log'
 alias geth-remove-data='cd ~/testnet;ls | grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}'
 
-function geth-create-accounts {
+function geth-create-account {
     local datadir="testnet"
     local passwd="jongyoungcha"
     local passwdfile="eth-passwd"
@@ -60,14 +60,30 @@ function geth-create-accounts {
 }
 
 
+function geth-remove-accounts {
+	local target="$HOME/testnet/keystore"
+	
+	if [[ -d "$target" ]]; then
+		rm -rf "$target"
+	else
+		echo "The accounts directory was not existing...(dir path : $target)"
+	fi
+
+	return
+}
+
+
 function geth-init-poa {
+	geth-kill
+    sleep 1
+    geth-remove-data
 	cp ~/genesis-poa.json ~/testnet/genesis.json
 	nohup geth --datadir=~/testnet --nodiscover --cache=2048 init ~/testnet/genesis.json >> ~/geth.log &
 }
 
 
 function geth-run { 
-	nohup geth --datadir=~/testnet --bootnodes "$BOOTNODE" --syncmode "full" --cache=2048 >> ~/geth.log & 
+	nohup geth --datadir=~/testnet --bootnodes "$BOOTNODE" --syncmode "full" --cache=2048 >> ~/geth.log &
 }
 
 
