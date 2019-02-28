@@ -26,7 +26,11 @@ function jong-init-c-bins {
 	# rtags install
 	cd
 	git clone --recursive https://github.com/Andersbakken/rtags.git
-	cd rtags
+	cd rtags	
+
+	git submodule init
+	git submodule update
+	
 	cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 .
 	make
 }
