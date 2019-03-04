@@ -31,7 +31,7 @@ alias geth-remove-db='geth --datadir=~/testnet removedb'
 alias geth-log='tail -f ~/geth.log'
 alias geth-remove-data='cd ~/testnet;ls | grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}'
 
-function geth-create-account {
+function brth-create-account {
     local datadir="testnet"
     local passwd="jongyoungcha"
     local passwdfile="eth-passwd"
@@ -64,7 +64,7 @@ function geth-create-account {
 }
 
 
-function geth-remove-accounts {
+function brth-remove-accounts {
 	local target="$HOME/testnet/keystore"
 	
 	if [[ -d "$target" ]]; then
@@ -77,7 +77,7 @@ function geth-remove-accounts {
 }
 
 
-function geth-init-poa {
+function brth-init-poa {
 	geth-kill
     sleep 1
     geth-remove-data
@@ -86,7 +86,7 @@ function geth-init-poa {
 }
 
 
-function geth-run { 
+function brth-run { 
 	nohup geth --datadir=~/testnet --bootnodes "$BOOTNODE" --syncmode "full" --cache=2048 >> ~/geth.log &
 }
 
