@@ -22,14 +22,14 @@ function bootnode-run { nohup bootnode -nodekey boot.key -verbosity 9 -addr :303
 alias bootnode-address='bootnode -nodekey boot.key -verbosity 9 -addr :30310 -writeaddress'
 alias bootnode-log="tail -f ~/bootnode.log"
 
-alias geth-kill="ps -ef | grep geth | grep grep -v | awk '{print \$2}' | xargs -i  kill -2 {}"
-alias geth-init='cp ~/genesis.json ~/testnet/genesis.json;nohup geth --datadir=~/testnet --nodiscover --cache=2048 init ~/testnet/genesis.json >> ~/geth.log &'
+alias brth-kill="ps -ef | grep geth | grep grep -v | awk '{print \$2}' | xargs -i  kill -2 {}"
+alias brth-init='cp ~/genesis.json ~/testnet/genesis.json;nohup geth --datadir=~/testnet --nodiscover --cache=2048 init ~/testnet/genesis.json >> ~/geth.log &'
 
-alias geth-console='geth --datadir=~/testnet --nodiscover console'
-alias geth-attach='geth --datadir=~/testnet --nodiscover attach'
-alias geth-remove-db='geth --datadir=~/testnet removedb'
-alias geth-log='tail -f ~/geth.log'
-alias geth-remove-data='cd ~/testnet;ls | grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}'
+alias brth-console='geth --datadir=~/testnet --nodiscover console'
+alias brth-attach='geth --datadir=~/testnet --nodiscover attach'
+alias brth-remove-db='geth --datadir=~/testnet removedb'
+alias brth-log='tail -f ~/geth.log'
+alias brth-remove-data='cd ~/testnet;ls | grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}'
 
 function brth-create-account {
     local datadir="testnet"
@@ -78,9 +78,9 @@ function brth-remove-accounts {
 
 
 function brth-init-poa {
-	geth-kill
+	brth-kill
     sleep 1
-    geth-remove-data
+    brth-remove-data
 	cp ~/genesis-poa.json ~/testnet/genesis.json
 	nohup geth --datadir=~/testnet --nodiscover --cache=2048 init ~/testnet/genesis.json >> ~/geth.log &
 }
@@ -96,25 +96,25 @@ function goto-berith {
 }
 
 
-function geth-init-run {
-    geth-kill
+function brth-init-run {
+    brth-kill
     sleep 1
-    geth-remove-data
+    brth-remove-data
     sleep 1
-    geth-init
+    brth-init
     sleep 1
-    geth-run
+    brth-run
 }
 
 
-function geth-init-run-poa {
-    geth-kill
+function brth-init-run-poa {
+    brth-kill
     sleep 1
-    geth-remove-data
+    brth-remove-data
     sleep 1
-    geth-init-poa
+    brth-init-poa
     sleep 1
-    geth-run
+    brth-run
 }
 
 
