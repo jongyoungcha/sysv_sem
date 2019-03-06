@@ -10,7 +10,7 @@
 		"constantinopleBlock": 5,
 		"bsrr": {
 			"period": 15,
-			"epoch": 30000
+			"epoch": 30
 		}
     },
     "nonce": "0x0",
