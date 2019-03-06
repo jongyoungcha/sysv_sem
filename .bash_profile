@@ -183,7 +183,7 @@ function brth-pull-replace-master-as-ycjo {
 	brth-pull-as-master
 	cd "berith-chain"
 	git remote set-url origin https://ycjo@bitbucket.org/ycjo/berith-chain.git
-	git push
+	git push -f
 
 	return
 }
