@@ -31,13 +31,13 @@ alias brth-remove-db='geth --datadir=~/testnet removedb'
 alias brth-log='tail -f ~/geth.log'
 
 function brth-remove-data {
-	local target="~/testnet"
-	if [[ ! -d "$target"  ]]; then
-		echo "$target was existing..."
+	local target="$HOME/testnet"
+	if [[ ! -d "$target" ]]; then
+		echo "$target was not existing..."
 		return
 	fi
 	cd "$target"
-	grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}
+	ls | grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}
 	cd
 }
 
