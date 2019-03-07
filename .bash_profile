@@ -135,7 +135,7 @@ function jong-set-homeenv-as-mine {
 
 
 function brth-pull-as-master {
-
+	
 	echo "$FUNCNAME[*]()"
 	
 	if [[ -z "$GO_IBIZ_PATH" ]]; then
@@ -143,6 +143,8 @@ function brth-pull-as-master {
 		return
 	fi
 
+	mkdir -p "$GO_IBIZ_PATH"
+	
 	cd "$GO_IBIZ_PATH"
 	
 	echo "Removing Berith previous berith : $GO_BERITH_PATH"
@@ -160,6 +162,8 @@ function brth-pull-as-ycjo {
 		echo "\$GO_IBIZ_PATH was not existing..."
 		return
 	fi
+	
+	mkdir -p "$GO_IBIZ_PATH"
 
 	cd "$GO_IBIZ_PATH"
 	
@@ -179,7 +183,7 @@ function brth-pull-replace-master-as-ycjo {
 		echo "\$GO_IBIZ_PATH was not existing..."
 		return
 	fi
-
+	
 	brth-pull-as-master
 	cd "berith-chain"
 	git remote set-url origin https://ycjo@bitbucket.org/ycjo/berith-chain.git
@@ -204,3 +208,7 @@ function brth-build-install {
 
 
 
+export GOROOT=~/go
+export GOPATH=~/goworks-berith
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
