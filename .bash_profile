@@ -99,6 +99,7 @@ function goto-berith {
 function brth-init-run {
     brth-kill
     sleep 1
+	mkdir -p "~/testnet"
     brth-remove-data
     sleep 1
     brth-init
@@ -110,6 +111,7 @@ function brth-init-run {
 function brth-init-run-poa {
     brth-kill
     sleep 1
+	mkdir -p "~/testnet"
     brth-remove-data
     sleep 1
     brth-init-poa
