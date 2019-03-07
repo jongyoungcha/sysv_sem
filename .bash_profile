@@ -29,11 +29,12 @@ alias brth-console='geth --datadir=~/testnet --nodiscover console'
 alias brth-attach='geth --datadir=~/testnet --nodiscover attach'
 alias brth-remove-db='geth --datadir=~/testnet removedb'
 alias brth-log='tail -f ~/geth.log'
+
 function brth-remove-data {
 	local target="~/testnet"
-	if [[ "$target"  ]]; then
-		echo "$target"
-
+	if [[ ! -d "$target"  ]]; then
+		echo "$target was existing..."
+		return
 	fi
 	cd "$target"
 	grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}
@@ -220,6 +221,10 @@ function brth-build-install {
 
 
 
+export GOROOT=~/go
+export GOPATH=~/goworks-berith
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
 export GOROOT=~/go
 export GOPATH=~/goworks-berith
 export PATH=$PATH:$GOROOT/bin
