@@ -29,7 +29,17 @@ alias brth-console='geth --datadir=~/testnet --nodiscover console'
 alias brth-attach='geth --datadir=~/testnet --nodiscover attach'
 alias brth-remove-db='geth --datadir=~/testnet removedb'
 alias brth-log='tail -f ~/geth.log'
-alias brth-remove-data='cd ~/testnet;ls | grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}'
+function brth-remove-data {
+	local target="~/testnet"
+	if [[ "$target"  ]]; then
+		echo "$target"
+
+	fi
+	cd "$target"
+	grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}
+	cd
+}
+
 
 function brth-create-account {
     local datadir="testnet"
