@@ -13,12 +13,12 @@ export PATH=$PATH:$GOPATH/bin
 export GO_IBIZ_PATH=$GOPATH/src/bitbucket.org/ibizsoftware
 export GO_BERITH_PATH=$GO_IBIZ_PATH/berith-chain
 
-
-export BOOTNODE=enode://637a54e3de83e4978efbaad91745dbee1fc60ff7c1608fddca3f23ce2d8c2878ae10a05f0f768b78dd46ca723449ae6cb34e76b7639d0cc2b6c0bea805f32527@192.168.0.160:30310
+export BOOTNODE=enode://b99c248be2ed40822a0d74976deeca49c63b7359966be549fbd8ccb3104909f988f3307df606344c384d9e873a48dfbca44aeb685acf9f34a5602bf36845da3a@192.168.0.160:30310
 alias bash-import="source ~/.bash_profile"
 
 function bootnode-run { nohup bootnode -nodekey boot.key -verbosity 9 -addr :30310 >> ~/bootnode.log & }
 
+alias bootnode-genkey='bootnode -genkey boot.key'
 alias bootnode-address='bootnode -nodekey boot.key -verbosity 9 -addr :30310 -writeaddress'
 alias bootnode-log="tail -f ~/bootnode.log"
 
@@ -221,6 +221,10 @@ function brth-build-install {
 
 
 
+export GOROOT=~/go
+export GOPATH=~/goworks-berith
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
 export GOROOT=~/go
 export GOPATH=~/goworks-berith
 export PATH=$PATH:$GOROOT/bin
