@@ -205,6 +205,7 @@ function brth-pull-replace-master-as-ycjo {
 	return
 }
 
+
 function brth-build-install {
 	if [[ -z "$GO_BERITH_PATH" ]]; then
 		echo "\$GO_BERITH_PATH was not existing..."
