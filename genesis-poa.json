@@ -9,7 +9,7 @@
 		"byzantiumBlock": 4,
 		"constantinopleBlock": 5,
 		"bsrr": {
-			"period": 2,
+			"period": 1,
 			"epoch": 10
 		}
     },
