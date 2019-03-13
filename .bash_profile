@@ -13,6 +13,9 @@ export PATH=$PATH:$GOPATH/bin
 export GO_IBIZ_PATH=$GOPATH/src/bitbucket.org/ibizsoftware
 export GO_BERITH_PATH=$GO_IBIZ_PATH/berith-chain
 
+export GOTRACEBACK=crash
+
+
 export BOOTNODE=enode://b99c248be2ed40822a0d74976deeca49c63b7359966be549fbd8ccb3104909f988f3307df606344c384d9e873a48dfbca44aeb685acf9f34a5602bf36845da3a@192.168.0.160:30310
 alias bash-import="source ~/.bash_profile"
 
