@@ -30,6 +30,9 @@ alias brth-attach='geth --datadir=~/testnet --nodiscover attach'
 alias brth-remove-db='geth --datadir=~/testnet removedb'
 alias brth-log='tail -f ~/geth.log'
 
+# for golang debuging
+ulimit -c unlimited
+
 function brth-remove-data {
 	local target="$HOME/testnet"
 	if [[ ! -d "$target" ]]; then
