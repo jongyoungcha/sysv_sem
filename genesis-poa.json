@@ -9,6 +9,7 @@
 		"byzantiumBlock": 4,
 		"constantinopleBlock": 5,
 		"bsrr": {
+			"rewards": 20,
 			"period": 1,
 			"epoch": 10
 		}
