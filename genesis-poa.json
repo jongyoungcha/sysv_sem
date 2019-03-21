@@ -10,7 +10,7 @@
 		"constantinopleBlock": 5,
 		"bsrr": {
 			"rewards": 20,
-			"period": 1,
+			"period": 10,
 			"epoch": 10
 		}
     },
