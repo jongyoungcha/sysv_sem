@@ -13,7 +13,7 @@ function jong-check-os-system {
 		INST_CMD="apt-get"
 		echo "$INST_CMD"
 	else
-		INST_CMD="sudo yum"
+		INST_CMD="yum"
 		echo "$INST_CMD"
 	fi
 }
