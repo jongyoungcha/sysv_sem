@@ -1,27 +1,48 @@
 #!/bin/bash
 
+
+
+export OS_TYPE
+export INST_CMD
+
+
+function jong-check-os-system {
+	OS_TYPE=`awk -F= '/^NAME/{print $2}' /etc/os-release`
+	# echo $OS_TYPE
+	if [ "$OS_TYPE" = \""Ubuntu"\" ]; then
+		INST_CMD="apt-get"
+		echo "$INST_CMD"
+	else
+		INST_CMD="sudo yum"
+		echo "$INST_CMD"
+	fi
+}
+jong-check-os-system
+
+
 # git 설치
 function jong-init-common-bins {
 	# git
-	apt-get install -y git
+	sudo "$INST_CMD" install -y git
 
 	# silver searcher
 	cd
-	apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+	sudo "$INST_CMD" install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
 	git clone https://github.com/ggreer/the_silver_searcher.git
 	cd the_silver_searcher
 	./build.sh
-	make install
+	sudo make install
 }
 
 # autotool 설치
 function jong-init-c-bins {
-	apt-get install -y build-essential
-	apt-get install -y automake
-	apt-get install -y autotools-devel
-	apt-get install -y cmake
-	apt-get install -y clang
-	apt-get install -y llvm
+	sudo "$INST_CMD" install -y build-essential
+	sudo "$INST_CMD" install -y automake
+	sudo "$INST_CMD" install -y autotools-dev
+	sudo "$INST_CMD" install -y cmake
+	sudo "$INST_CMD" install -y clang
+	sudo "$INST_CMD" install -y llvm
+	sudo "$INST_CMD" install -y libclang-dev
 
 	# rtags install
 	cd
@@ -33,6 +54,7 @@ function jong-init-c-bins {
 	
 	cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 .
 	make
+	sudo make install
 }
 
 # go 설치
@@ -67,25 +89,26 @@ function jong-init-emacs {
 	cd
 	wget http://ftp.kaist.ac.kr/gnu/emacs/emacs-26.1.tar.gz
 	tar -xvf emacs-26.1.tar.gz
-	apt-get install -y libgtk-3-dev;
-	apt-get install -y libxpm-dev;
-	apt-get install -y gnutls-dev;
-	apt-get install -y libncurses5-dev;
-	apt-get install -y libx11-dev;
-	apt-get install -y libxpm-dev;
-	apt-get install -y libjpeg-dev;
-	apt-get install -y libpng-dev;
-	apt-get install -y libgif-dev;
-	apt-get install -y libtiff-dev;
-	apt-get install -y libgtk2.0-dev;
+	sudo "$INST_CMD" install -y libgtk-3-dev;
+	sudo "$INST_CMD" install -y libxpm-dev;
+	sudo "$INST_CMD" install -y gnutls-dev;
+	sudo "$INST_CMD" install -y libncurses5-dev;
+	sudo "$INST_CMD" install -y libx11-dev;
+	sudo "$INST_CMD" install -y libxpm-dev;
+	sudo "$INST_CMD" install -y libjpeg-dev;
+	sudo "$INST_CMD" install -y libpng-dev;
+	sudo "$INST_CMD" install -y libgif-dev;
+	sudo "$INST_CMD" install -y libtiff-dev;
+	sudo "$INST_CMD" install -y libgtk2.0-dev;
 
 	cd ./emacs-26.1
 	./configure
-	make install
+	sudo make install
 
 	cd
 	git clone https://github.com/jongyoungcha/.emacs.d.git
 }
+
 
 function jong-init-all-kinds-things {
 	jong-init-common-bins
