@@ -96,6 +96,20 @@ function jong-init-all-kinds-things {
 }
 
 
+function jong-set-rtags-wrapper {
+	mkdir -p ~/.local/bin
+	cd ~/.local/bin
+	for c in cc c++ gcc g++; do
+		if [ ! -z `which gcc-rtags-wrapper.sh` ]; then
+			ln -s `which gcc-rtags-wrapper.sh` "$c"
+		else
+			echo "Coulnt find gcc-rtags-wrapper.sh"
+		fi
+	done
+}
+
+
+
 
 
 
