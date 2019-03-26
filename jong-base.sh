@@ -1,7 +1,6 @@
 #!/bin/bash
 
 
-
 export OS_TYPE
 export INST_CMD
 
@@ -25,6 +24,11 @@ function jong-init-common-bins {
 	# git
 	sudo "$INST_CMD" install -y git
 
+	if [ "$OS_TYPE"="CentOS Linux" ]; then
+		sudo yum install -y https://centos7.iuscommunity.org/ius-release.rpm
+		sudo yum install -y git2u-all
+	fi
+	
 	# silver searcher
 	cd
 	sudo "$INST_CMD" install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev

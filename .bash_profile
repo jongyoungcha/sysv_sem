@@ -12,6 +12,12 @@ export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
 export GO_IBIZ_PATH=$GOPATH/src/bitbucket.org/ibizsoftware
 export GO_BERITH_PATH=$GO_IBIZ_PATH/berith-chain
+export PATH=$PATH:$GOPATH/bin
+export PATH=~/.local/bin:$PATH
+
+source /opt/rh/devtoolset-7/enable
+source /opt/rh/llvm-toolset-7/enable
+
 
 export GOTRACEBACK=crash
 
