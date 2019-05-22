@@ -7,7 +7,7 @@ if [ -f ~/jong-base.sh ]; then
 fi
 
 export GOROOT=~/go
-export GOPATH=~/goworks-berith
+export GOPATH=~/goworks
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
 export GO_IBIZ_PATH=$GOPATH/src/bitbucket.org/ibizsoftware
@@ -20,6 +20,7 @@ source /opt/rh/llvm-toolset-7/enable
 export PATH=~/.local/bin:$PATH
 
 export GOTRACEBACK=crash
+export BOOST_ROOT=~/.local/boost
 
 
 export BOOTNODE=enode://b99c248be2ed40822a0d74976deeca49c63b7359966be549fbd8ccb3104909f988f3307df606344c384d9e873a48dfbca44aeb685acf9f34a5602bf36845da3a@192.168.0.160:30310
