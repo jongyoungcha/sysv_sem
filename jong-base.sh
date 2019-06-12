@@ -104,6 +104,20 @@ function jong-install-ccls {
 }
 
 
+function jong-install-bear {
+		if [ ! -d "$HOME/.local" ]; then
+				mkdir -p "$HOME/.local"
+		fi
+
+		# install Bear
+		cd
+		git clone https://github.com/rizsotto/Bear.git
+		cd Bear
+		cmake -DCMAKE_PREFIX_PATH="$HOME/.local/bin" .
+		sudo make install 
+}
+
+
 # function jong-install-vs-lldb {
 #     local target_path="$HOME/local"
 #     if [ ! -d "$target_path" ]; then

@@ -233,7 +233,3 @@ function brth-build-install {
 	return
 }
 
-export GOROOT=~/go
-export GOPATH=~/goworks-berith
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
