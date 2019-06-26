@@ -70,10 +70,11 @@ function jong-install-llvm {
 		  mkdir -p "$target_path"
 	 fi
 	 
-	 # cd
-	 # git clone https://github.com/llvm/llvm-project.git
-	 # cd llvm-project
-	 # git fetch && git checkout llvm_version
+	 cd
+	 git clone https://github.com/llvm/llvm-project.git
+	 cd llvm-project
+	 git fetch && git checkout llvm_version
+	 
 	 mkdir build-llvm
 	 mkdir build-clang
 	 
