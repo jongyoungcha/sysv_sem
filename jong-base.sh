@@ -19,6 +19,9 @@ function jong-check-os-system {
 jong-check-os-system
 
 
+
+
+
 # git 설치
 function jong-init-common-bins {
 	 # git
@@ -59,6 +62,18 @@ function jong-init-c-bins {
 	 cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 .
 	 make
 	 sudo make install
+
+
+	 if [ ! -d "$HOME/.local" ]; then
+		mkdir -p "$HOME/.local"
+	 fi
+
+	 # ccls install
+	 cd
+	 git clone --depth=1 --recursive https://github.com/MaskRay/ccls
+	 cd ccls
+	 cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/bin/
+	 cmake --build Release
 }
 
 
@@ -91,19 +106,6 @@ function jong-install-llvm {
 }
 
 
-function jong-install-ccls {
-	 if [ ! -d "$HOME/.local" ]; then
-			mkdir -p "$HOME/.local"
-	 fi
-
-	 # ccls install
-	 cd
-	 git clone --depth=1 --recursive https://github.com/MaskRay/ccls
-	 cd ccls
-	 cmake -H. -BRelease -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/bin/
-	 cmake --build Release
-}
-
 
 function jong-install-bear {
 		if [ ! -d "$HOME/.local" ]; then
@@ -117,20 +119,6 @@ function jong-install-bear {
 		cmake -DCMAKE_PREFIX_PATH="$HOME/.local/bin" .
 		sudo make install
 }
-
-
-# function jong-install-vs-lldb {
-#     local target_path="$HOME/local"
-#     if [ ! -d "$target_path" ]; then
-#         mkdir -p "$target_path"
-#     fi
-
-#     cd
-#     git clone https://github.com/llvm-mirror/lldb/tree/master/tools/lldb-vscode
-#     cd lldb-vscode
-#     cmake -DCMAKE_PREFIX_PATH="$target_path"
-#     make install
-# }
 
 
 # go 설치
@@ -148,6 +136,30 @@ function jong-init-golang-bins {
 	 go get -u github.com/go-delve/delve/cmd/dlv
 }
 
+
+function jong-init-java-bins {
+	cd
+	wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/13+33/5b8a42f3905b406298b72d750b6919f6/jdk-13_linux-x64_bin.tar.gz
+	tar -xvf jdk-13_linux-x64_bin.tar.gz
+	export JAVA_HOME=$HOME/jdk-13
+	export PATH=$JAVA_HOME/bin:$PATH
+
+}
+
+
+function jong-init-scala-bins {
+	cd
+	wget https://downloads.lightbend.com/scala/2.13.1/scala-2.13.1.tgz
+	tar -xvf scala-2.13.1.tgz
+	echo 'export SCALA_HOME="$HOME/scala-2.13.1"' >> ~/.bash_profile
+	echo 'export PATH=$SCALA_HOME/bin:$PATH' >> ~/.bash_profile
+	source ~/.bash_profile
+
+	cd
+	wget https://piccolo.link/sbt-1.3.3.tgz
+	tar -xvf sbt-1.3.3.tgz
+	sudo cp -Rf sbt/bin/* /usr/local/bin/
+}
 
 
 function jong-init-berith {
