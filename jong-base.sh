@@ -16,7 +16,7 @@ function jong-check-os-system {
 			echo "$INST_CMD"
 	 fi
 }
-jong-check-os-system
+#jong-check-os-system
 
 
 
