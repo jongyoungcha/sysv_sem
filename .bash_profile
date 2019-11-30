@@ -1,58 +1,231 @@
-. .bashrc
+source ~/.bashrc
+source ~/.swit_env
 
-export GOOGLE_APPLICATION_CREDENTIALS=/Users/swit-mac/swit-gke-resource-access.json
-export SWIT_RUN_MODE=debug
-export SWIT_REDIS_ADDR=10.6.0.3:6379
-export SWIT_REDIS_PASSWORD=
+if [ -f ~/jong-base.sh ]; then
+	. ~/jong-base.sh
+fi
 
-export SWIT_MYSQL_USERNAME=switapp
-export SWIT_MYSQL_PASSWORD=switapp0801!
-export SWIT_MYSQL_IP=104.196.250.200
-export SWIT_MYSQL_PORT=3306
-export SWIT_MYSQL_DATABASE=swit
+export GOROOT=/usr/local/Cellar/go/1.13.4/libexec/
+export GOPATH=~/go
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
 
-export APIV3_PORT=9090
-export WORKSPACE_PORT=50052
-export USER_PORT=50053
-export CHANNEL_PORT=50054
-export PROJECT_PORT=50055
-export AUTH_PORT=50062
-export ELASTIC_PORT=50071
+export PATH=~/.local/bin:$PATH
 
-export WORKSPACE_SERVICE_ADDR=10.0.0.35:50052
-export USER_SERVICE_ADDR=10.0.0.35:50053
-export CHANNEL_SERVICE_ADDR=10.0.0.35:50054
-export PROJECT_SERVICE_ADDR=10.0.0.35:50055
-export PAYMENT_SERVICE_ADDR=10.0.0.35:50060
-export AUTH_SERVICE_ADDR=10.0.0.35:50062
-export EMAIL_SERVICE_ADDR=10.0.0.35:50068
-export ELASTIC_SERVICE_ADDR=10.0.0.35:50071
-export ACTIVITY_SERVICE_ADDR=10.0.0.35:50074
-export MENTION_SERVICE_ADDR=10.0.0.35:50075
-export SAML_SERVICE_ADDR=10.0.0.35:50077
-export PAY_SERVICE_ADDR=10.0.0.35:50078
-export APPVERSION_SERVICE_ADDR=10.0.0.35:50061
-export SUPPORT_SERVICE_ADDR=10.0.0.35:50080
-export SFDC_SERVICE_ADDR=10.0.0.35:50081
-export MBOX_SERVICE_ADDR=127.0.0.1:50082
-export IMPORT_SERVICE_ADDR=10.0.0.35:50082
-export OVERVIEW_SERVICE_ADDR=10.0.0.35:50059
-export MEMBER_SERVICE_ADDR=10.0.0.35:50059
+export GOTRACEBACK=crash
+export BOOST_ROOT=~/.local/boost
 
-export TASK_SERVICE_ADDR=127.0.0.1:50057
-export WORKSPACE_SERVICE_ADDR=127.0.0.1:50052
-export PAY_SERVICE_ADDR=127.0.0.1:50078
-export USER_SERVICE_ADDR=127.0.0.1:50053
-export AUTH_SERVICE_ADDR=127.0.0.1:50062
-export APPVERSION_SERVICE_ADDR=127.0.0.1:50061
-export SFDC_SERVICE_ADDR=127.0.0.1:50081
-export EXPORT_SERVICE_ADDR=x
-export MESSAGE_SERVICE_ADDR=x
-export OVERVIEW_SERVICE_ADDR=x
-export MEMBER_SERVICE_ADDR=x
-export STATS_SERVICE_ADDR=x
-export IMPORT_SQL_SERVICE_ADDR=x
+export RUST_HOME=~/.cargo/
+export PATH=$PATH:$RUST_HOME/bin
 
-export ASSET_PORT=50084
-#export ASSET_SERVICE_ADDR=10.0.0.35:50084
-export ASSET_SERVICE_ADDR=127.0.0.1:50084
+#export RUST_BACKTRACE=1
+
+export BOOTNODE=enode://b99c248be2ed40822a0d74976deeca49c63b7359966be549fbd8ccb3104909f988f3307df606344c384d9e873a48dfbca44aeb685acf9f34a5602bf36845da3a@192.168.0.160:30310
+alias bash-import="source ~/.bash_profile"
+
+function bootnode-run { nohup bootnode -nodekey boot.key -verbosity 9 -addr :30310 >> ~/bootnode.log & }
+
+alias bootnode-genkey='bootnode -genkey boot.key'
+alias bootnode-address='bootnode -nodekey boot.key -verbosity 9 -addr :30310 -writeaddress'
+alias bootnode-log="tail -f ~/bootnode.log"
+
+alias brth-kill="ps -ef | grep geth | grep grep -v | awk '{print \$2}' | xargs -i  kill -2 {}"
+alias brth-init='cp ~/genesis.json ~/testnet/genesis.json;nohup geth --datadir=~/testnet --nodiscover --cache=2048 init ~/testnet/genesis.json >> ~/geth.log &'
+
+alias brth-console='geth --datadir=~/testnet --nodiscover console'
+alias brth-attach='geth --datadir=~/testnet --nodiscover attach'
+alias brth-remove-db='geth --datadir=~/testnet removedb'
+alias brth-log='tail -f ~/geth.log'
+
+# for golang debuging
+ulimit -c unlimited
+
+function brth-remove-data {
+	local target="$HOME/testnet"
+	if [[ ! -d "$target" ]]; then
+		echo "$target was not existing..."
+		return
+	fi
+	cd "$target"
+	ls | grep -v genesis.json | grep -v keystore | xargs -i rm -rf {}
+	cd
+}
+
+
+function brth-create-account {
+    local datadir="testnet"
+    local passwd="jongyoungcha"
+    local passwdfile="eth-passwd"
+    local accountsfile="eth-accounts"
+	
+    output=`which geth`
+    if [[ "$output" == "" ]];then
+        echo not found "$output"
+        return 1
+    else
+        echo Found "$output"
+    fi
+	
+	if [ ! -f "$passwdfile" ]; then
+        touch ~/"$passwdfile"
+        echo "$passwd" >> ~/"$passwdfile"
+	fi
+	
+    if [ -f "$accountsfile" ]; then
+        echo "Initializing the accounts file..."
+        rm ~/"$accountsfile"
+        touch ~/"$accountsfile"
+    fi
+	if [ ! -d "$datadir" ]; then
+        mkdir ~/"$datadir" > /dev/null
+	fi
+	
+    geth --datadir ~/"$datadir" account new --password ~/"$passwdfile"
+	sleep 1
+}
+
+
+function brth-remove-accounts {
+	local target="$HOME/testnet/keystore"
+	
+	if [[ -d "$target" ]]; then
+		rm -rf "$target"
+	else
+		echo "The accounts directory was not existing...(dir path : $target)"
+	fi
+
+	return
+}
+
+
+function brth-init-poa {
+	brth-kill
+    sleep 1
+    brth-remove-data
+	cp ~/genesis-poa.json ~/testnet/genesis.json
+	nohup geth --datadir=~/testnet --nodiscover --cache=2048 init ~/testnet/genesis.json >> ~/geth.log &
+}
+
+
+function brth-run { 
+	nohup geth --datadir=~/testnet --bootnodes "$BOOTNODE" --syncmode "full" --cache=2048 >> ~/geth.log &
+}
+
+
+function goto-berith {
+    cd $GOPATH/src/bitbucket.org/ibizsoftware/berith-chain
+}
+
+
+function brth-init-run {
+    brth-kill
+    sleep 1
+	mkdir -p "~/testnet"
+    brth-remove-data
+    sleep 1
+    brth-init
+    sleep 1
+    brth-run
+}
+
+
+function brth-init-run-poa {
+    brth-kill
+    sleep 1
+	mkdir -p "~/testnet"
+    brth-remove-data
+    sleep 1
+    brth-init-poa
+    sleep 1
+    brth-run
+}
+
+
+function pull-berith-env {
+	git pull
+}
+
+
+function jong-set-homeenv-as-mine {
+	cd
+	git init
+	git remote add https://github.com/jongyoungcha/Dictionary.git
+	git fetch
+	git checkout -t origin/master -f
+
+	return
+}
+
+
+function brth-pull-as-master {
+	
+	echo "$FUNCNAME[*]()"
+	
+	if [[ -z "$GO_IBIZ_PATH" ]]; then
+		echo "\$GO_IBIZ_PATH was not existing..."
+		return
+	fi
+
+	mkdir -p "$GO_IBIZ_PATH"
+	
+	cd "$GO_IBIZ_PATH"
+	
+	echo "Removing Berith previous berith : $GO_BERITH_PATH"
+	rm -rf "$GO_BERITH_PATH"
+	git clone https://ycjo@bitbucket.org/ibizsoftware/berith-chain.git
+	
+	return
+}
+
+function brth-pull-as-ycjo {
+	
+	echo "$FUNCNAME[*]()"
+	
+	if [[ -z "$GO_IBIZ_PATH" ]]; then
+		echo "\$GO_IBIZ_PATH was not existing..."
+		return
+	fi
+	
+	mkdir -p "$GO_IBIZ_PATH"
+
+	cd "$GO_IBIZ_PATH"
+	
+	echo "Removing Berith previous berith : $GO_BERITH_PATH"
+	rm -rf "$GO_BERITH_PATH"
+	git clone https://ycjo@bitbucket.org/ycjo/berith-chain.git
+	
+	return
+}
+
+
+function brth-pull-replace-master-as-ycjo {
+	
+	echo "$FUNCNAME[*]()"
+	
+	if [[ -z "$GO_IBIZ_PATH" ]]; then
+		echo "\$GO_IBIZ_PATH was not existing..."
+		return
+	fi
+	
+	brth-pull-as-master
+	cd "berith-chain"
+	git remote set-url origin https://ycjo@bitbucket.org/ycjo/berith-chain.git
+	git push -f
+
+	return
+}
+
+
+function brth-build-install {
+	if [[ -z "$GO_BERITH_PATH" ]]; then
+		echo "\$GO_BERITH_PATH was not existing..."
+		return
+	fi
+
+	cd "$GO_BERITH_PATH"/cmd/geth
+	go build
+	go install
+	cd
+	
+	return
+}
