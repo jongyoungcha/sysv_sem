@@ -5,12 +5,20 @@ if [ -f ~/jong-base.sh ]; then
 	. ~/jong-base.sh
 fi
 
+if [ $(uname) == "Darwin" ]; then
+	export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ "
+	export CLICOLOR=1
+	export LSCOLORS=ExFxBxDxCxegedabagacad
+	alias ls='ls -GFh'
+fi
+
 export GOROOT=/usr/local/Cellar/go/1.13.4/libexec/
 export GOPATH=~/go
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
 
 export PATH=~/.local/bin:$PATH
+export PATH=/usr/local/Cellar/mysql@5.7/5.7.28/bin:$PATH
 
 export GOTRACEBACK=crash
 export BOOST_ROOT=~/.local/boost
@@ -19,9 +27,12 @@ export RUST_HOME=~/.cargo/
 export PATH=$PATH:$RUST_HOME/bin
 
 #export RUST_BACKTRACE=1
-
 export BOOTNODE=enode://b99c248be2ed40822a0d74976deeca49c63b7359966be549fbd8ccb3104909f988f3307df606344c384d9e873a48dfbca44aeb685acf9f34a5602bf36845da3a@192.168.0.160:30310
 alias bash-import="source ~/.bash_profile"
+
+
+export GCLOUD=~/google-cloud-sdk
+export PATH=$PATH:$GCLOUD/bin
 
 function bootnode-run { nohup bootnode -nodekey boot.key -verbosity 9 -addr :30310 >> ~/bootnode.log & }
 
