@@ -12,7 +12,11 @@ if [ $(uname) == "Darwin" ]; then
 	alias ls='ls -GFh'
 fi
 
-export GOROOT=/usr/local/Cellar/go/1.13.4/libexec/
+if [ $(uname) == "Darwin" ]; then
+	export GOROOT=/usr/local/Cellar/go/1.13.4/libexec/
+else
+	export GOROOT=~/goroot
+fi
 export GOPATH=~/go
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$GOPATH/bin
@@ -240,3 +244,4 @@ function brth-build-install {
 	
 	return
 }
+
