@@ -30,6 +30,8 @@ if [ -f ~/jong-base.sh ]; then
 	source ~/jong-base.sh
 fi
 
+
+export TERM=xterm-256color
 source ~/.swit_env
 
 if [ $(uname) == "Darwin" ]; then
