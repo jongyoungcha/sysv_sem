@@ -80,6 +80,8 @@ alias brth-console='geth --datadir=~/testnet --nodiscover console'
 alias brth-attach='geth --datadir=~/testnet --nodiscover attach'
 alias brth-remove-db='geth --datadir=~/testnet removedb'
 alias brth-log='tail -f ~/geth.log'
+alias netstat-listen='sudo lsof -i -P | grep -i "listen"'
+
 
 # for golang debuging
 ulimit -c unlimited
